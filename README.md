@@ -1,0 +1,1 @@
+# GS-stock-frontend
