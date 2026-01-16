@@ -1,59 +1,132 @@
-# Frontend
+# Smart Stock Management System - Frontend
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 21.0.5.
+Enterprise-grade Angular frontend for the Smart Stock Management System.
 
-## Development server
+## Tech Stack
 
-To start a local development server, run:
+- **Angular 21** (Standalone Components)
+- **Tailwind CSS** (Styling)
+- **TypeScript** (Type Safety)
+- **RxJS** (Reactive Programming)
 
+## Features
+
+### Authentication & Authorization
+- JWT-based authentication
+- Role-based access control (ROLE_ADMIN, ROLE_COMPTABLE)
+- Protected routes with guards
+- Auto-redirect on token expiration
+
+### Modules
+
+1. **Dashboard**
+   - KPI cards (Total HT, TVA, TTC)
+   - Date filters (This week, This month, Custom range)
+   - Export achats to Excel (Admin only)
+
+2. **Products**
+   - Product list with stock alerts
+   - Create/Update/Delete (Admin only)
+   - Read-only for Comptable
+   - Export stock to Excel (Admin only)
+
+3. **Stock Movements**
+   - Paginated table with filters
+   - Filter by product, type (ENTREE/SORTIE), date range
+   - Create movements (Admin only)
+   - View-only for Comptable
+
+4. **Achats** (Admin only)
+   - Create draft achats
+   - Add lines to achats
+   - Validate achats
+   - Display totals from backend
+
+5. **Exports** (Admin only)
+   - Export stock to Excel
+   - Export achats to Excel
+
+## Setup
+
+### Prerequisites
+- Node.js (v18 or higher)
+- npm
+
+### Installation
+
+1. Install dependencies:
 ```bash
-ng serve
+npm install
 ```
 
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
-
-## Code scaffolding
-
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
-
+2. Start the development server:
 ```bash
-ng generate component component-name
+npm start
 ```
 
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
+The application will be available at `http://localhost:4200`
+
+### Build
 
 ```bash
-ng generate --help
+npm run build
 ```
 
-## Building
+## Project Structure
 
-To build the project run:
-
-```bash
-ng build
+```
+src/
+├── app/
+│   ├── core/
+│   │   ├── config/          # API configuration
+│   │   ├── guards/          # Route guards
+│   │   ├── interceptors/   # HTTP interceptors
+│   │   └── services/        # Core services
+│   ├── features/           # Feature modules
+│   │   ├── login/
+│   │   ├── dashboard/
+│   │   ├── products/
+│   │   ├── movements/
+│   │   └── achats/
+│   ├── layout/             # Layout components
+│   │   ├── sidebar/
+│   │   ├── topbar/
+│   │   └── main-layout/
+│   ├── models/            # TypeScript interfaces
+│   └── shared/            # Shared components & services
+│       ├── components/
+│       └── services/
 ```
 
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
+## Backend Integration
 
-## Running unit tests
+The frontend consumes the backend API at `http://localhost:8080`.
 
-To execute unit tests with the [Vitest](https://vitest.dev/) test runner, use the following command:
+All API endpoints are defined in `src/app/core/config/api.config.ts` and follow the backend contract strictly.
 
-```bash
-ng test
-```
+## Key Principles
 
-## Running end-to-end tests
+1. **No Business Logic on Frontend**: All calculations, validations, and business rules are handled by the backend
+2. **Trust Backend Responses**: Frontend displays data as received from backend
+3. **Role-Based UI**: UI elements are hidden/shown based on user roles
+4. **Clean Architecture**: Separation of concerns with services, components, and models
 
-For end-to-end (e2e) testing, run:
+## Development
 
-```bash
-ng e2e
-```
+### Adding a New Feature
 
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
+1. Create models in `src/app/models/`
+2. Create service in `src/app/core/services/`
+3. Create component in `src/app/features/`
+4. Add route in `src/app/app.routes.ts`
+5. Update sidebar navigation if needed
 
-## Additional Resources
+### Styling
 
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+- Use Tailwind CSS utility classes
+- Follow the existing design system
+- Maintain consistent spacing and colors
+
+## License
+
+Private - Internal Use Only

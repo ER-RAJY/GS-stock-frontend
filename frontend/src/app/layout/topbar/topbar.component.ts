@@ -1,0 +1,60 @@
+import { Component, inject } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { Router } from '@angular/router';
+import { AuthService } from '../../core/services/auth.service';
+
+@Component({
+  selector: 'app-topbar',
+  standalone: true,
+  imports: [CommonModule],
+  template: `
+    <header class="h-16 bg-white border-b border-gray-200 fixed top-0 right-0 left-64 z-40">
+      <div class="h-full px-6 flex items-center justify-between">
+        <div class="flex-1"></div>
+        <div class="flex items-center space-x-4">
+          <div class="flex items-center space-x-3">
+            <div class="text-right">
+              <p class="text-sm font-medium text-gray-900">{{ authService.currentUser()?.username }}</p>
+              <p class="text-xs text-gray-500">{{ getRoleLabel() }}</p>
+            </div>
+            <div class="w-10 h-10 rounded-full bg-primary-100 flex items-center justify-center">
+              <span class="text-primary-700 font-medium text-sm">
+                {{ getInitials() }}
+              </span>
+            </div>
+          </div>
+          <button
+            (click)="logout()"
+            class="px-4 py-2 text-sm text-gray-700 hover:text-gray-900 hover:bg-gray-50 rounded-lg transition-colors"
+          >
+            Déconnexion
+          </button>
+        </div>
+      </div>
+    </header>
+  `,
+})
+export class TopbarComponent {
+  authService = inject(AuthService);
+  private router = inject(Router);
+
+  logout(): void {
+    this.authService.logout();
+  }
+
+  getInitials(): string {
+    const username = this.authService.currentUser()?.username || '';
+    return username
+      .split(' ')
+      .map((n) => n[0])
+      .join('')
+      .toUpperCase()
+      .slice(0, 2);
+  }
+
+  getRoleLabel(): string {
+    if (this.authService.isAdmin()) return 'Administrateur';
+    if (this.authService.isComptable()) return 'Comptable';
+    return 'Utilisateur';
+  }
+}
