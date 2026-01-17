@@ -10,20 +10,8 @@ import { ToastComponent } from '../../shared/components/toast/toast.component';
   selector: 'app-main-layout',
   standalone: true,
   imports: [CommonModule, RouterOutlet, SidebarComponent, TopbarComponent, ToastComponent],
-  template: `
-    <div class="flex h-screen bg-gray-50">
-      <app-sidebar />
-      <div class="flex-1 ml-64">
-        <app-topbar />
-        <main class="pt-16 p-6">
-          <router-outlet />
-        </main>
-      </div>
-    </div>
-    @for (toast of toastService.toasts(); track toast.id) {
-      <app-toast [message]="toast.message" [type]="toast.type" />
-    }
-  `,
+  templateUrl: './main-layout.component.html',
+  styleUrls: ['./main-layout.component.scss'],
 })
 export class MainLayoutComponent {
   toastService = inject(ToastService);

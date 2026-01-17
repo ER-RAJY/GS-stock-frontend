@@ -14,26 +14,8 @@ interface NavItem {
   selector: 'app-sidebar',
   standalone: true,
   imports: [CommonModule, RouterLink, RouterLinkActive],
-  template: `
-    <aside class="w-64 bg-white border-r border-gray-200 h-screen fixed left-0 top-0 overflow-y-auto">
-      <div class="p-6">
-        <h1 class="text-xl font-bold text-gray-900 mb-8">Smart Stock</h1>
-        <nav class="space-y-1">
-          @for (item of visibleNavItems(); track item.route) {
-            <a
-              [routerLink]="item.route"
-              routerLinkActive="bg-primary-50 text-primary-700 border-primary-600"
-              [routerLinkActiveOptions]="{ exact: item.route === '/dashboard' }"
-              class="flex items-center px-4 py-3 text-sm font-medium text-gray-700 rounded-lg hover:bg-gray-50 hover:text-gray-900 transition-colors border-l-4 border-transparent"
-            >
-              <span class="mr-3" [innerHTML]="item.icon"></span>
-              {{ item.label }}
-            </a>
-          }
-        </nav>
-      </div>
-    </aside>
-  `,
+  templateUrl: './sidebar.component.html',
+  styleUrls: ['./sidebar.component.scss'],
 })
 export class SidebarComponent {
   private authService = inject(AuthService);
